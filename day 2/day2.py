@@ -5,7 +5,7 @@ Day 2
 
 ##### PART 1 #####
 
-test_list = [1,57,3,4]
+test_list = [1,57,3,4,80]
 
 # Functions:
 
@@ -39,6 +39,27 @@ def check_adjacent_numbers(numbers) -> bool:
         return False
     else:
         return True
+    
+
+def group_check(numbers) -> bool:
+    '''Uses upstream validation functions to check the list for all conditions.'''
+    # Check if list is ascending:
+    if check_if_ascending(numbers):
+        # Check if adjacent numbers are safe:
+        if check_adjacent_numbers(numbers):
+            # Increment the passed counter:
+            return True
+
+    # If not ascending, check if list is descending:
+    elif check_if_descending(numbers):
+        # Check if adjacent numbers are safe:
+        if check_adjacent_numbers(numbers):
+            # Increment the passed counter:
+            return True
+        
+    else:
+        return False
+
 
 # Initialize safe report counter:
 safe_report_count = 0
@@ -54,27 +75,111 @@ with open('day2_input.txt', 'r') as f:
         # Convert them to integer types:
         int_list = [int(x) for x in num_list]
 
-        # Initialize a flag for unsafe:
-        unsafe = False
+        # Testing:
+        if group_check(int_list):
+            safe_report_count += 1
 
-        # Check if list is ascending:
-        if check_if_ascending(int_list):
-            # Check if adjacent numbers are safe:
-            if check_adjacent_numbers(int_list):
-                # Increment safe report counter:
-                safe_report_count += 1
+        # # Initialize a flag for unsafe:
+        # unsafe = False
 
-        # If not ascending, check if list is descending:
-        elif check_if_descending(int_list):
-            # Check if adjacent numbers are safe:
-            if check_adjacent_numbers(int_list):
-                # Increment safe report counter:
-                safe_report_count += 1
-        else:
-            unsafe = True
+        # # Check if list is ascending:
+        # if check_if_ascending(int_list):
+        #     # Check if adjacent numbers are safe:
+        #     if check_adjacent_numbers(int_list):
+        #         # Increment safe report counter:
+        #         safe_report_count += 1
+
+        # # If not ascending, check if list is descending:
+        # elif check_if_descending(int_list):
+        #     # Check if adjacent numbers are safe:
+        #     if check_adjacent_numbers(int_list):
+        #         # Increment safe report counter:
+        #         safe_report_count += 1
+        # else:
+        #     unsafe = True
             
     # Close the file:
     f.close()
 
 # Print the safe report count:
-print(f"Number of safe reports: {safe_report_count}")
+print(f"Number of safe reports in Part 1: {safe_report_count}")
+
+##### PART 2 #####
+
+# Initialize safe report counter:
+safe_report_count_v2 = 0
+
+# Read the input file:
+with open('day2_input.txt', 'r') as f:
+
+    for line in f.readlines():
+
+        # Extract the five numbers:
+        num_list = line.split(' ')
+
+        # Convert them to integer types:
+        int_list = [int(x) for x in num_list]
+
+        # Testing:
+        if group_check(int_list):
+            safe_report_count_v2 += 1
+
+        # # Initialize a flag for unsafe:
+        # unsafe = False
+
+        # # Check if list is ascending:
+        # if check_if_ascending(int_list):
+        #     # Check if adjacent numbers are safe:
+        #     if check_adjacent_numbers(int_list):
+        #         # Increment safe report counter:
+        #         safe_report_count_v2 += 1
+
+        # # If not ascending, check if list is descending:
+        # elif check_if_descending(int_list):
+        #     # Check if adjacent numbers are safe:
+        #     if check_adjacent_numbers(int_list):
+        #         # Increment safe report counter:
+        #         safe_report_count_v2 += 1
+        else:
+            
+            # Introduce the problem dampener:
+            for i in range(len(num_list)):
+
+                # Temp safety counter (can only have 1 safe case per report):
+                temp_safety_counter = 0
+
+                # # Temporarily remove the current item:
+                temp_num_list = num_list.copy()
+                temp_num_list.pop(i)
+
+                # Run a group check on the temporary list:
+                if group_check(temp_num_list):
+                    temp_safety_counter += 1
+            
+            # Ensure that we only add 1 to the safety count even if removing multiple report levels causes the status to change:
+            if temp_safety_counter > 0:
+                safe_report_count_v2
+
+                    # If successful
+
+                # # Re-run safety checks:
+                # # Check if list is ascending:
+                # if check_if_ascending(temp_num_list):
+                #     # Check if adjacent numbers are safe:
+                #     if check_adjacent_numbers(temp_num_list):
+                #         # Increment safe report counter:
+                #         safe_report_count_v2 += 1
+
+                # # If not ascending, check if list is descending:
+                # elif check_if_descending(temp_num_list):
+                #     # Check if adjacent numbers are safe:
+                #     if check_adjacent_numbers(temp_num_list):
+                #         # Increment safe report counter:
+                #         safe_report_count_v2 += 1
+
+# Print the safe report count:
+print(f"Number of safe reports in Part 2: {safe_report_count_v2}")
+
+
+# Test functions:
+# print(f"Test List: {test_list}")
