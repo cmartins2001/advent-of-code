@@ -110,55 +110,59 @@ print(f"Number of safe reports in Part 1: {safe_report_count}")
 safe_report_count_v2 = 0
 
 # Read the input file:
-with open('day2_input.txt', 'r') as f:
+# with open('day2_input.txt', 'r') as f:
 
-    for line in f.readlines():
+#     for line in f.readlines():
 
-        # Extract the five numbers:
-        num_list = line.split(' ')
+#         # Extract the five numbers:
+#         num_list = line.split(' ')
 
-        # Convert them to integer types:
-        int_list = [int(x) for x in num_list]
+#         # Convert them to integer types:
+#         int_list = [int(x) for x in num_list]
 
-        # Testing:
-        if group_check(int_list):
-            safe_report_count_v2 += 1
+#         # Testing:
+#         if group_check(int_list):
+#             safe_report_count_v2 += 1
 
-        # # Initialize a flag for unsafe:
-        # unsafe = False
+#         # # Initialize a flag for unsafe:
+#         # unsafe = False
 
-        # # Check if list is ascending:
-        # if check_if_ascending(int_list):
-        #     # Check if adjacent numbers are safe:
-        #     if check_adjacent_numbers(int_list):
-        #         # Increment safe report counter:
-        #         safe_report_count_v2 += 1
+#         # # Check if list is ascending:
+#         # if check_if_ascending(int_list):
+#         #     # Check if adjacent numbers are safe:
+#         #     if check_adjacent_numbers(int_list):
+#         #         # Increment safe report counter:
+#         #         safe_report_count_v2 += 1
 
-        # # If not ascending, check if list is descending:
-        # elif check_if_descending(int_list):
-        #     # Check if adjacent numbers are safe:
-        #     if check_adjacent_numbers(int_list):
-        #         # Increment safe report counter:
-        #         safe_report_count_v2 += 1
-        else:
+#         # # If not ascending, check if list is descending:
+#         # elif check_if_descending(int_list):
+#         #     # Check if adjacent numbers are safe:
+#         #     if check_adjacent_numbers(int_list):
+#         #         # Increment safe report counter:
+#         #         safe_report_count_v2 += 1
+#         else:
+
+#             test = False
             
-            # Introduce the problem dampener:
-            for i in range(len(num_list)):
+#             # Introduce the problem dampener:
+#             for i in range(len(int_list)):
 
-                # Temp safety counter (can only have 1 safe case per report):
-                temp_safety_counter = 0
+#                 # Temp safety counter (can only have 1 safe case per report):
+#                 temp_safety_counter = 0
 
-                # # Temporarily remove the current item:
-                temp_num_list = num_list.copy()
-                temp_num_list.pop(i)
+#                 # # Temporarily remove the current item:
+#                 temp_num_list = int_list.copy()
+#                 temp_num_list.pop(i)
 
-                # Run a group check on the temporary list:
-                if group_check(temp_num_list):
-                    temp_safety_counter += 1
+#                 # Run a group check on the temporary list:
+#                 test = group_check(temp_num_list)
+#                 if group_check(temp_num_list):
+#                     # test = True
+#                     temp_safety_counter += 1
             
-            # Ensure that we only add 1 to the safety count even if removing multiple report levels causes the status to change:
-            if temp_safety_counter > 0:
-                safe_report_count_v2
+#         # Ensure that we only add 1 to the safety count even if removing multiple report levels causes the status to change:
+#         if temp_safety_counter > 0:
+#             safe_report_count_v2 += 1
 
                     # If successful
 
@@ -182,4 +186,27 @@ print(f"Number of safe reports in Part 2: {safe_report_count_v2}")
 
 
 # Test functions:
-# print(f"Test List: {test_list}")
+test_list2 = [1, 2, 56, 3, 4]
+print(f"Test List: {test_list}")
+
+# Introduce the problem dampener:
+for i in range(len(test_list2)):
+
+    # Temp safety counter (can only have 1 safe case per report):
+    temp_safety_counter = 0
+
+    # # Temporarily remove the current item:
+    temp_num_list = test_list2.copy()
+    temp_num_list.pop(i)
+
+    # Run a group check on the temporary list:
+    test = group_check(temp_num_list)
+    if test:
+        # test = True
+        temp_safety_counter += 1
+
+# Ensure that we only add 1 to the safety count even if removing multiple report levels causes the status to change:
+if temp_safety_counter > 0:
+    safe_report_count_v2 += 1
+
+print(temp_safety_counter)
