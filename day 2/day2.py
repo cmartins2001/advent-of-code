@@ -47,16 +47,19 @@ def group_check(numbers) -> bool:
     if check_if_ascending(numbers):
         # Check if adjacent numbers are safe:
         if check_adjacent_numbers(numbers):
-            # Increment the passed counter:
             return True
+        else:
+            return False
 
     # If not ascending, check if list is descending:
     elif check_if_descending(numbers):
         # Check if adjacent numbers are safe:
         if check_adjacent_numbers(numbers):
-            # Increment the passed counter:
             return True
+        else:
+            return False
         
+    # If not meeting all conditions:
     else:
         return False
 
@@ -78,25 +81,6 @@ with open('day2_input.txt', 'r') as f:
         # Testing:
         if group_check(int_list):
             safe_report_count += 1
-
-        # # Initialize a flag for unsafe:
-        # unsafe = False
-
-        # # Check if list is ascending:
-        # if check_if_ascending(int_list):
-        #     # Check if adjacent numbers are safe:
-        #     if check_adjacent_numbers(int_list):
-        #         # Increment safe report counter:
-        #         safe_report_count += 1
-
-        # # If not ascending, check if list is descending:
-        # elif check_if_descending(int_list):
-        #     # Check if adjacent numbers are safe:
-        #     if check_adjacent_numbers(int_list):
-        #         # Increment safe report counter:
-        #         safe_report_count += 1
-        # else:
-        #     unsafe = True
             
     # Close the file:
     f.close()
@@ -108,7 +92,6 @@ print(f"Number of safe reports in Part 1: {safe_report_count}")
 
 # Initialize safe report counter and loop variable:
 safe_report_count_v2 = 0
-dampener_loop = True
 
 # Read the input file:
 with open('day2_input.txt', 'r') as f:
@@ -127,55 +110,30 @@ with open('day2_input.txt', 'r') as f:
 
         # Dampener check:
         else:
-
-            while dampener_loop:
             
-                # Introduce the problem dampener:
-                for i in range(len(int_list)):
+            # Initialize a line-level counter:
+            test_count = 0
+            
+            # Iterate over each list item:
+            for i in range(len(int_list)):
 
-                    # # Temporarily remove the current item:
-                    temp_num_list = int_list.copy()
-                    temp_num_list.pop(i)
+                # Temporarily remove the current item:
+                temp_num_list = int_list.copy()
+                temp_num_list.pop(i)
 
-                    # Run a group check on the temporary list:
-                    if group_check(temp_num_list):
-                        # Increment the counter and end the while loop:
-                        safe_report_count_v2 += 1
-                        dampener_loop = False
+                # Run a group check on the temporary list:
+                if group_check(temp_num_list):
+                    # Increment the test counter and end the nested loop:
+                    test_count += 1
+                    break
 
-                    # Allow the while loop to end on the last number without incrementing:
-                    elif (not group_check(temp_num_list)) & (i == len(temp_num_list)):
-                        dampener_loop = False
+                # Allow the while loop to end on the last number without incrementing:
+                elif (not group_check(temp_num_list)) & (i == len(temp_num_list)):
+                    break
+            
+            # Increment the actual safety report only if the test counter was incremented:
+            if test_count == 1:
+                safe_report_count_v2 += 1
 
 # Print the safe report count:
 print(f"Number of safe reports in Part 2: {safe_report_count_v2}")
-
-
-# # Test functions:
-# test_list2 = [1, 2, 56, 3, 4]
-# print(f"Test List: {test_list}")
-
-# test = True
-
-# # Introduce the problem dampener:
-# while test:
-#     for i in range(len(test_list2)):
-
-#         # Temp safety counter (can only have 1 safe case per report):
-#         temp_safety_counter = 0
-
-#         # # Temporarily remove the current item:
-#         temp_num_list = test_list2.copy()
-#         temp_num_list.pop(i)
-
-#         # Run a group check on the temporary list:
-#         if group_check(temp_num_list):
-#             # Increment the counter and end the while loop:
-#             safe_report_count_v2 += 1
-#             test = False
-        
-#         # Allow the while loop to end on the last number without incrementing:
-#         elif (not group_check(test_list2)) & (i == len(test_list2)):
-#             test = False
-
-# print(safe_report_count_v2)
